@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloWorldController {
 
+    private final HelloWorldService helloWorldService;
+
     @Autowired
-    private HelloWorldService helloWorldService;
+    public HelloWorldController(HelloWorldService helloWorldService) {
+        this.helloWorldService = helloWorldService;
+    }
 
     @GetMapping("/")
     public HelloWorldDto helloWorld() {
