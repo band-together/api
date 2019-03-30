@@ -1,0 +1,4 @@
+spring.datasource.url=jdbc:mysql://localhost:13306/band
+spring.datasource.username=sqluser
+spring.datasource.password=<Replace Me!>
+spring.datasource.name=mysql
