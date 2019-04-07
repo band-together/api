@@ -2,7 +2,11 @@
 
 All the reads
 
-All code should have JavaDoc, unit tests.
+All code should have JavaDoc and unit tests. 
+
+PRs must be approved by at least one other person before merging, and "dev" branch is the main branch we merge work into. "Master" branch will be used for releases, and "integration" will be used for RCs.
+
+In order to contribute, fork the repository and create a branch per tasks, and open a PR to the "dev" branch from your fork.
 
 
 To start your Docker container with a mysql database, do the following:
