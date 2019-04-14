@@ -1,7 +1,11 @@
-package com.band.api.repository;
+package com.band.api.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,8 +17,10 @@ import javax.persistence.Table;
 @Entity
 @Builder
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user", catalog = "band")
-public class UserDao {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,10 +44,10 @@ public class UserDao {
     @Column(columnDefinition = "VARCHAR(128)", nullable = false)
     private String name;
 
-    @Column(columnDefinition = "VARCHAR(128)", nullable = false)
+    @Column(columnDefinition = "VARCHAR(128)")
     private String state;
 
-    @Column(columnDefinition = "VARCHAR(128)", nullable = false)
+    @Column(columnDefinition = "VARCHAR(128)")
     private String city;
 
 }

@@ -1,4 +1,4 @@
-package com.band.api.repository;
+package com.band.api.domain;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Builder
 @Getter
 @Table(name = "user_endorsement", catalog = "band")
-public class UserEndorsementDao {
+public class UserEndorsement {
     @Id
     private Integer id;
 

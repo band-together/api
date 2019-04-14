@@ -1,4 +1,4 @@
-package com.band.api.repository;
+package com.band.api.domain;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import java.util.Date;
 @Builder
 @Getter
 @Table(name = "band_member", catalog = "band")
-public class BandMemberDao implements Serializable {
+public class BandMember implements Serializable {
     @Id
     @Column(name = "band_id", nullable = false)
     private Integer bandId;

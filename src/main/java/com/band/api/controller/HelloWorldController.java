@@ -16,8 +16,9 @@ public class HelloWorldController {
         this.helloWorldService = helloWorldService;
     }
 
-    @GetMapping("/")
-    public HelloWorldDto helloWorld() {
-        return helloWorldService.createHelloDto();
-    }
+//    @GetMapping("/")
+//    public HelloWorldDto helloWorld() {
+//        return helloWorldService.createHelloDto();
+//    }
+
 }
