@@ -1,4 +1,4 @@
-package com.band.api.repository;
+package com.band.api.domain;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Builder
 @Getter
 @Table(name = "band_skills_needed", catalog = "band")
-public class BandSkillsNeedeedDao {
+public class BandSkillsNeedeed {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
