@@ -30,7 +30,6 @@ class MutationTest {
         mockPasswordEncoder = Mockito.mock(PasswordEncoder.class);
         when(mockPasswordEncoder.encode(any(String.class))).thenReturn("testEncode");
         mutation = new Mutation(mockUserRepository, mockPasswordEncoder);
-
     }
 
     @Test
@@ -68,5 +67,4 @@ class MutationTest {
         when(mockUserRepository.save(any(User.class))).thenThrow(DataAccessResourceFailureException.class);
         assertThrows(CustomException.class, () -> mutation.createUser(email, username, password, name));
     }
-
 }
