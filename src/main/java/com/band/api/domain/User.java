@@ -28,7 +28,7 @@ public class User {
     private String username;
 
     @Column(columnDefinition = "VARCHAR(128)", nullable = false)
-    private String emailDisplay;
+    private String email;
 
     @Column(columnDefinition = "VARCHAR(128)", nullable = false, unique = true)
     private String emailSearch;

@@ -1,4 +1,4 @@
-package com.band.api.Exceptions;
+package com.band.api.exceptions;
 
 import graphql.ErrorType;
 import graphql.GraphQLError;
@@ -8,13 +8,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CustomException extends RuntimeException implements GraphQLError {
+public class BaseGraphQLException extends RuntimeException implements GraphQLError {
     private Map<String, Object> extensions = new HashMap<>();
 
-    public CustomException(String message) {
+    public BaseGraphQLException(String message) {
         super(message);
     }
-    public void addExtension(String key, Object val){
+
+    public void addExtension(String key, Object val) {
         extensions.put(key, val);
     }
 

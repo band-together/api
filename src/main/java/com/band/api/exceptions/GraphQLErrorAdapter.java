@@ -1,4 +1,4 @@
-package com.band.api.Exceptions;
+package com.band.api.exceptions;
 
 import graphql.ErrorType;
 import graphql.ExceptionWhileDataFetching;
@@ -8,6 +8,9 @@ import graphql.language.SourceLocation;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Removes location and stacktrace from exceptions returned to client
+ */
 public class GraphQLErrorAdapter implements GraphQLError {
 
     private GraphQLError error;
@@ -43,6 +46,11 @@ public class GraphQLErrorAdapter implements GraphQLError {
 
     @Override
     public String getMessage() {
-        return (error instanceof ExceptionWhileDataFetching) ? ((ExceptionWhileDataFetching) error).getException().getMessage() : error.getMessage();
+        if (error instanceof ExceptionWhileDataFetching) {
+            return ((ExceptionWhileDataFetching) error).getException().getMessage();
+        }
+        else {
+            return error.getMessage();
+        }
     }
 }

@@ -1,9 +1,7 @@
 type User {
     id: ID!
     username: String!
-    emailSearch: String!
-    emailDisplay: String!
-    passwordHash: String
+    email: String!
     name: String
 }
 

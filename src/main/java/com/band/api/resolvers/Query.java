@@ -12,21 +12,21 @@ public class Query implements GraphQLQueryResolver {
     private final UserRepository userRepository;
 
     @Autowired
-    public Query (UserRepository userRepository){
+    public Query(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     /**
      * Takes ID of user, returns user with that ID if it exists in repository.
+     *
      * @param id
      * @return found User
      */
-    public User getUser(Integer id){
+    public User getUser(Integer id) {
         User u;
         try {
             u = userRepository.findById(id).get();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             //TODO Handle the exception
             //Possible exceptions, user not found, connection to database down, etc.
             return User.builder().name(e.getMessage()).build();
