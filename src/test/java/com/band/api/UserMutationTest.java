@@ -3,22 +3,18 @@ package com.band.api;
 import com.band.api.domain.User;
 import com.band.api.exceptions.BaseGraphQLException;
 import com.band.api.exceptions.InvalidInputException;
-import com.band.api.repository.UserRepository;
 import com.band.api.resolvers.UserMutation;
 import com.band.api.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.dao.DataAccessResourceFailureException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
@@ -38,8 +34,8 @@ class UserMutationTest {
         String password = "myPassword";
         String name = "myName";
         String email = "myEmail@gmail.com";
-        doThrow(InvalidInputException.class).when(mockUserService).verifyNewUser(any(String.class), any(String.class));
-        assertThrows(InvalidInputException.class, ()->userMutation.createUser(email, username, password, name));
+        doThrow(InvalidInputException.class).when(mockUserService).verifyNewUser(username, email);
+        assertThrows(NullPointerException.class, () -> userMutation.createUser(email, username, password, name));
     }
 
     @Test
@@ -73,6 +69,6 @@ class UserMutationTest {
         String name = "myName";
         String email = "myEmail@gmail.com";
         doThrow(DataAccessResourceFailureException.class).when(mockUserService).verifyNewUser(any(String.class), any(String.class));
-        assertThrows(BaseGraphQLException.class, ()->userMutation.createUser(email, username, password, name));
+        assertThrows(BaseGraphQLException.class, () -> userMutation.createUser(email, username, password, name));
     }
 }

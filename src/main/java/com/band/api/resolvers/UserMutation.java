@@ -2,6 +2,7 @@ package com.band.api.resolvers;
 
 import com.band.api.domain.User;
 import com.band.api.exceptions.BaseGraphQLException;
+import com.band.api.exceptions.InvalidInputException;
 import com.band.api.services.UserService;
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,8 @@ public class UserMutation implements GraphQLMutationResolver {
             BaseGraphQLException ex = new BaseGraphQLException("Database Unavailable");
             ex.addExtension("Database", "Unavailable");
             throw ex;
+        } catch (InvalidInputException e) {
+            throw e;
         }
     }
 }

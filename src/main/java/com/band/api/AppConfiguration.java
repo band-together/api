@@ -1,6 +1,6 @@
 package com.band.api;
 
-import com.band.api.exceptions.GraphQLErrorAdapter;
+import com.band.api.exceptions.BaseGraphQLException;
 import graphql.ExceptionWhileDataFetching;
 import graphql.GraphQLError;
 import graphql.servlet.GraphQLErrorHandler;
@@ -24,22 +24,23 @@ public class AppConfiguration {
 
     @Bean
     public GraphQLErrorHandler errorHandler() {
-        return new GraphQLErrorHandler() {
-            @Override
-            public List<GraphQLError> processErrors(List<GraphQLError> errors) {
-
-                return Stream.concat(
-                        errors.stream()
-                                .filter(this::isClientError),
-                        errors.stream()
-                                .filter(Predicate.not(this::isClientError))
-                                .map(GraphQLErrorAdapter::new)
-                ).collect(Collectors.toList());
-            }
-
-            private boolean isClientError(GraphQLError error) {
-                return !(error instanceof ExceptionWhileDataFetching || error instanceof Throwable);
-            }
-        };
+        return (errors)->processErrors(errors);
     }
+
+    private List<GraphQLError> processErrors(List<GraphQLError> errors) {
+
+        return Stream.concat(
+                errors.stream()
+                        .filter(this::isClientError),
+                errors.stream()
+                        .filter(Predicate.not(this::isClientError))
+                        .map(BaseGraphQLException::new)
+        ).collect(Collectors.toList());
+    }
+
+    private boolean isClientError(GraphQLError error) {
+        return !(error instanceof ExceptionWhileDataFetching || error instanceof Throwable);
+    }
+
+
 }
