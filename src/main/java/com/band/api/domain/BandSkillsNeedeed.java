@@ -25,7 +25,7 @@ public class BandSkillsNeedeed {
     @Column(columnDefinition = "VARCHAR(128)", nullable = false)
     private String skill;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private Integer experience;
 
 }

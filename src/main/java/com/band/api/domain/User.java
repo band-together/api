@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,11 +24,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(columnDefinition = "VARCHAR(128)", nullable = false)
+    @Column(columnDefinition = "VARCHAR(128)", nullable = false, unique = true)
     private String username;
 
     @Column(columnDefinition = "VARCHAR(128)", nullable = false)
     private String email;
+
+    @Column(columnDefinition = "VARCHAR(128)", nullable = false, unique = true)
+    private String emailSearch;
 
     @Column(name = "password_hash", columnDefinition = "CHAR(60)", nullable = false)
     private String passwordHash;
