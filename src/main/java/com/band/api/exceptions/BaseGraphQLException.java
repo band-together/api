@@ -54,12 +54,10 @@ public class BaseGraphQLException extends RuntimeException implements GraphQLErr
             if (error instanceof ExceptionWhileDataFetching) {
                 return ((ExceptionWhileDataFetching) error).getException().getMessage();
             }
-            else {
-                return error.getMessage();
-            }
+            return error.getMessage();
         }
-        else {
-            return super.getMessage();
-        }
+
+        return super.getMessage();
+
     }
 }

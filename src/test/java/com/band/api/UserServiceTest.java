@@ -49,8 +49,7 @@ public class UserServiceTest {
 
     @Test
     void createUserDatabaseUnavailable() {
-        doThrow(DataAccessResourceFailureException.class).when(mockUserRepository).save(any(User.class));
-        //when(mockUserRepository.save(any(User.class))).thenThrow(DataAccessResourceFailureException.class);
+        when(mockUserRepository.save(any(User.class))).thenThrow(DataAccessResourceFailureException.class);
         assertThrows(DataAccessResourceFailureException.class,
                 () -> userService.createUser(email, username, password, name));
 
