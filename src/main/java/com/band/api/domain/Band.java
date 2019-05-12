@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "band", catalog = "band")
 public class Band {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(columnDefinition = "VARCHAR(128)", nullable = false)
