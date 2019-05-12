@@ -11,11 +11,13 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
+    private final JWTService jwtService;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JWTService jwtService) {
         this.userRepository = userRepository;
         this.encoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     /**
@@ -68,4 +70,13 @@ public class UserService {
         }
     }
 
+    public User login(String username, String password) {
+        User u = userRepository.findTopByUsername(username);
+
+        if (u == null || !encoder.matches(password, u.getPasswordHash())) {
+            throw new InvalidInputException("Invalid Credentials");
+        }
+        u.setToken(jwtService.createToken(u));
+        return u;
+    }
 }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class UserMutation implements GraphQLMutationResolver {
-    UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserMutation(UserService userService) {
@@ -44,6 +44,19 @@ public class UserMutation implements GraphQLMutationResolver {
             throw ex;
         } catch (InvalidInputException e) {
             throw e;
+        }
+    }
+
+    public User login(String username, String password) {
+        try {
+            User u = userService.login(username, password);
+            return u;
+        } catch (DataAccessResourceFailureException e) {
+            //Database Unavailable
+            log.debug(e.toString());
+            BaseGraphQLException ex = new BaseGraphQLException("Database Unavailable");
+            ex.addExtension("Database", "Unavailable");
+            throw ex;
         }
     }
 }

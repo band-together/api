@@ -30,7 +30,7 @@ public class BaseGraphQLException extends RuntimeException implements GraphQLErr
 
     @Override
     public List<SourceLocation> getLocations() {
-        return null;
+        return List.of();
     }
 
     @Override
@@ -45,7 +45,7 @@ public class BaseGraphQLException extends RuntimeException implements GraphQLErr
 
     @Override
     public StackTraceElement[] getStackTrace() {
-        return null;
+        return new StackTraceElement[0];
     }
 
     @Override
