@@ -1,16 +1,12 @@
 package com.band.api;
 
-import com.auth0.jwt.JWT;
 import com.band.api.domain.User;
-import com.band.api.exceptions.BaseGraphQLException;
 import com.band.api.exceptions.InvalidInputException;
 import com.band.api.repository.UserRepository;
 import com.band.api.services.JWTService;
 import com.band.api.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-//import org.mockito.ArgumentMatchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,12 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.samePropertyValuesAs;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 public class UserServiceTest {
@@ -86,7 +79,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void loginSuccess(){
+    void loginSuccess() {
         when(mockUserRepository.findTopByUsername(username)).thenReturn(User.builder().build());
         when(mockEncoder.matches(anyString(), any())).thenReturn(true);
         when(mockJwtService.createToken(any(User.class))).thenReturn("MyToken");
@@ -101,7 +94,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void loginDatabaseUnavailable(){
+    void loginDatabaseUnavailable() {
         when(mockUserRepository.findTopByUsername(username)).thenThrow(DataAccessResourceFailureException.class);
         assertThrows(DataAccessResourceFailureException.class, () -> userService.login(username, password));
     }

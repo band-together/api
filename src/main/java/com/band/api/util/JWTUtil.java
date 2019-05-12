@@ -11,7 +11,6 @@ import java.util.Date;
 @Component
 public class JWTUtil {
 
-
     public Algorithm getAlgorithm(String token_secret) {
         return Algorithm.HMAC256(token_secret);
     }
