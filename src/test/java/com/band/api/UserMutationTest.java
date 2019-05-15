@@ -13,7 +13,6 @@ import org.springframework.dao.DataAccessResourceFailureException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
@@ -21,6 +20,11 @@ import static org.mockito.Mockito.when;
 class UserMutationTest {
     private UserService mockUserService;
     private UserMutation userMutation;
+
+    String username = "myUsername";
+    String password = "myPassword";
+    String name = "myName";
+    String email = "myEmail@gmail.com";
 
     @BeforeEach
     void setup() {
@@ -30,20 +34,13 @@ class UserMutationTest {
 
     @Test
     void createUserDuplicateUsernameOrEmail() {
-        String username = "myUsername";
-        String password = "myPassword";
-        String name = "myName";
-        String email = "myEmail@gmail.com";
+
         doThrow(InvalidInputException.class).when(mockUserService).verifyNewUser(username, email);
-        assertThrows(NullPointerException.class, () -> userMutation.createUser(email, username, password, name));
+        assertThrows(InvalidInputException.class, () -> userMutation.createUser(email, username, password, name));
     }
 
     @Test
     void createUserSuccess() {
-        String username = "myUsername";
-        String password = "myPassword";
-        String name = "myName";
-        String email = "myEmail@gmail.com";
         when(mockUserService.createUser(email, username, password, name)).thenReturn(
                 User.builder()
                         .id(1)
@@ -64,11 +61,26 @@ class UserMutationTest {
 
     @Test
     void createUserDatabaseUnavailable() {
-        String username = "myUsername";
-        String password = "myPassword";
-        String name = "myName";
-        String email = "myEmail@gmail.com";
-        doThrow(DataAccessResourceFailureException.class).when(mockUserService).verifyNewUser(any(String.class), any(String.class));
+        doThrow(DataAccessResourceFailureException.class).when(mockUserService).verifyNewUser(username, email);
         assertThrows(BaseGraphQLException.class, () -> userMutation.createUser(email, username, password, name));
     }
+
+    @Test
+    void loginSuccess() {
+        when(mockUserService.login(username, password)).thenReturn(User.builder().build());
+        User u = userMutation.login(username, password);
+    }
+
+    @Test
+    void loginDatabaseUnavailable() {
+        when(mockUserService.login(username, password)).thenThrow(DataAccessResourceFailureException.class);
+        assertThrows(BaseGraphQLException.class, () -> userMutation.login(username, password));
+    }
+
+    @Test
+    void loginInvalidCredentials() {
+        when(mockUserService.login(username, password)).thenThrow(InvalidInputException.class);
+        assertThrows(InvalidInputException.class, () -> userMutation.login(username, password));
+    }
+
 }

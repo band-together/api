@@ -1,6 +1,8 @@
 package com.band.api.exceptions;
 
-public class InvalidInputException extends BaseGraphQLException {
+import graphql.GraphQLError;
+
+public class InvalidInputException extends BaseGraphQLException implements GraphQLError {
     public InvalidInputException(String message) {
         super(message);
     }
